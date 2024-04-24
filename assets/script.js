@@ -55,16 +55,26 @@ const rightArrow = document.querySelector('#banner .arrow_right');
 leftArrow.addEventListener('click', fonct_leftArrowClick);  // Ajoute un écouteur d'événement 'click'
 rightArrow.addEventListener('click', fonct_rightArrowClick);
 
-function fonct_leftArrowClick() {  // Fonction flèche gauche lancée par le 'click'
-	currentSlideIndex = (currentSlideIndex - 1);  // Décrémente l'index du slide
-    fonct_updateCarrousel();
+function fonct_leftArrowClick() {
+    if (currentSlideIndex === 0) { // si n° index = 0 
+        currentSlideIndex = slides.length - 1; // indique dernier n° index (length-1) de 'slides'
+    } else {
+        currentSlideIndex -= 1; //décrémente l'index de 1
+    }
+    fonct_updateCarrousel(); 
 }
 
-function fonct_rightArrowClick() { // Fonction flèche droite lancée par le 'click'
-	currentSlideIndex = (currentSlideIndex + 1); // Incrémente l'index du slide
-    fonct_updateCarrousel();
+function fonct_rightArrowClick() {
+    if (currentSlideIndex === slides.length - 1) { // si n° index = le dernier
+        currentSlideIndex = 0; // indique le premier n° index de 'slides'
+    } else {
+        currentSlideIndex += 1; //incrémente l'index de 1
+    }
+    fonct_updateCarrousel(); 
 }
 
+
+// autre option possible avec modulo
 
 
 
