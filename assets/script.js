@@ -6,44 +6,70 @@ const slides = [
 ];
 
 /*********************************** */
-// Sélectionne les flèches à l'intérieur de la div #banner
-const leftArrow = document.querySelector('#banner .arrow_left');
-const rightArrow = document.querySelector('#banner .arrow_right');
-
-// Ajoute des écouteurs d'événements
-leftArrow.addEventListener('click', fonct_leftArrowClick);
-	console.log("écouteur sur flèche gauche");
-rightArrow.addEventListener('click', fonct_rightArrowClick);
-	console.log("écouteur sur flèche droite");
-
- // Fonctions pour gérer les clics sur les flèches
- function fonct_leftArrowClick() {
-	console.log("Flèche gauche cliquée");
-	alert("Flèche gauche cliquée");
-}
-
-function fonct_rightArrowClick() {
-	console.log("Flèche droite cliquée");
-	alert("Flèche droite cliquée");
-}
-/************************************ */
 
 // ajoute dynamiquement les span.dot au html, en comptant les images du tableau 'slides'
 function fonct_createDotSpan() {
-    slides.forEach((_, index) => { 							// pour chaque entrée dans le tableau 'slides'
-		const divDots = document.querySelector('#banner .dots'); 	// Sélectionne la div qui a id=banner class=.dots
-        const spanDot = document.createElement('span'); 	// crée un span
-        spanDot.classList.add('dot'); 						// ajoute la class .dot au span
+    slides.forEach((_, index) => { 	// pour chaque entrée dans le tableau 'slides'
+		const divDots = document.querySelector('#banner .dots'); // Sélectionne la div qui a id=banner class=.dots
+        const spanDot = document.createElement('span'); // crée un span
+        spanDot.classList.add('dot'); // ajoute la class .dot au spanDot
 		
-        if (index === 0) {									// Ajoute la classe .dot_selected au premier spanDot
+        if (index === 0) {	// Ajoute la classe .dot_selected au premier spanDot
             spanDot.classList.add('dot_selected');
         }
 
-        divDots.appendChild(spanDot); 						// ajoute le spanDot dans divDots
+        divDots.appendChild(spanDot); // ajoute le spanDot dans divDots
     });
 }
 
 fonct_createDotSpan(); // ne pas oublier de Lancer la fonction ;)
+
+/**************************************** */
+
+let currentSlideIndex = 0; // La variable qui contiendra l'index du slide visible (0 au départ)
+
+// Fonctionnement du carrousel
+
+function fonct_updateCarrousel() {
+    const imgBanner = document.querySelector('#banner .banner-img');
+    const pBanner = document.querySelector('#banner p');
+    const dotBanner = document.querySelectorAll('#banner .dot');
+
+    imgBanner.src = slides[currentSlideIndex].image; // sélectionne l'image qui a l'index en cours dans le tableau slides
+    pBanner.innerHTML = slides[currentSlideIndex].tagLine; // sélectionne le texte qui a l'index en cours dans le tableau slides
+ 
+	dotBanner.forEach((dot, index) => {  // contrôle quel dot a l'index en cours et ajoute class selected
+        if (index === currentSlideIndex) {
+            dot.classList.add('dot_selected');
+        } else {
+            dot.classList.remove('dot_selected');
+        }
+    });
+}
+
+//Fonctionnement des flèches
+
+const leftArrow = document.querySelector('#banner .arrow_left'); // Sélectionne les flèches à l'intérieur de la div html #banner
+const rightArrow = document.querySelector('#banner .arrow_right');
+
+leftArrow.addEventListener('click', fonct_leftArrowClick);  // Ajoute un écouteur d'événement 'click'
+rightArrow.addEventListener('click', fonct_rightArrowClick);
+
+function fonct_leftArrowClick() {  // Fonction flèche gauche lancée par le 'click'
+	currentSlideIndex = (currentSlideIndex - 1);  // Décrémente l'index du slide
+    fonct_updateCarrousel();
+}
+
+function fonct_rightArrowClick() { // Fonction flèche droite lancée par le 'click'
+	currentSlideIndex = (currentSlideIndex + 1); // Incrémente l'index du slide
+    fonct_updateCarrousel();
+}
+
+
+
+
+
+
 
 
 
