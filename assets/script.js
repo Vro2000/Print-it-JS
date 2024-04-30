@@ -10,7 +10,7 @@ const slides = [
 // ajoute dynamiquement les span.dot au html, en comptant les images du tableau 'slides'
 function fonct_createDotSpan() {
     slides.forEach((_, index) => { 	// pour chaque entrée dans le tableau 'slides'
-		const divDots = document.querySelector('#banner .dots'); // Sélectionne la div qui a id=banner class=.dots
+		const divDots = document.querySelector('#banner .dots'); // Sélectionne la div qui a id=banner et .dots
         const spanDot = document.createElement('span'); // crée un span
         spanDot.classList.add('dot'); // ajoute la class .dot au spanDot
 		
@@ -27,25 +27,6 @@ fonct_createDotSpan(); // ne pas oublier de Lancer la fonction ;)
 /**************************************** */
 
 let currentSlideIndex = 0; // La variable qui contiendra l'index du slide visible (0 au départ)
-
-// Fonctionnement du carrousel
-
-function fonct_updateCarrousel() {
-    const imgBanner = document.querySelector('#banner .banner-img');
-    const pBanner = document.querySelector('#banner p');
-    const dotBanner = document.querySelectorAll('#banner .dot');
-
-    imgBanner.src = slides[currentSlideIndex].image; // sélectionne l'image qui a l'index en cours dans le tableau slides
-    pBanner.innerHTML = slides[currentSlideIndex].tagLine; // sélectionne le texte qui a l'index en cours dans le tableau slides
- 
-	dotBanner.forEach((dot, index) => {  // contrôle quel dot a l'index en cours et ajoute class selected
-        if (index === currentSlideIndex) {
-            dot.classList.add('dot_selected');
-        } else {
-            dot.classList.remove('dot_selected');
-        }
-    });
-}
 
 //Fonctionnement des flèches
 
@@ -72,6 +53,30 @@ function fonct_rightArrowClick() {
     }
     fonct_updateCarrousel(); 
 }
+
+// Fonctionnement du carrousel
+
+function fonct_updateCarrousel() {
+    const imgBanner = document.querySelector('#banner .banner-img'); // cherche où est l'image dans le html
+    const pBanner = document.querySelector('#banner p'); // cherche où est le texte dans le html
+
+    imgBanner.src = slides[currentSlideIndex].image; // modifie la source par celle de l'image qui a l'index en cours dans le tableau slides
+    pBanner.innerHTML = slides[currentSlideIndex].tagLine; // modifie le texte par celui qui a l'index en cours dans le tableau slides
+ 
+
+    const dotBanner = document.querySelectorAll('#banner .dot'); //liste tous les éléments #banner.dot du html
+    console.log(dotBanner); 
+
+	dotBanner.forEach((dot, index) => {  
+        if (index === currentSlideIndex) {
+            dot.classList.add('dot_selected'); // contrôle quel dot a l'index en cours et ajoute class selected
+        } else {
+            dot.classList.remove('dot_selected');
+        }
+    });
+}
+
+
 
 
 // autre option possible avec modulo
